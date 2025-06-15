@@ -1,0 +1,6 @@
+python-dotenv
+google-genai
+playwright
+requests
+google-adk
+crewai-tools
