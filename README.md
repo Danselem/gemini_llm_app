@@ -2,6 +2,10 @@
 
 A demonstration project for building LLM applications using Google's **Gemini models**, with **LangChain**, **ChromaDB**, and **Retrieval-Augmented Generation (RAG)**. This app shows how to load documents, embed them, store in a vector DB, and answer queries based on context.
 
+## 👤 Author
+
+- **Daniel Egbo** – [@Danselem](https://github.com/Danselem)
+
 ---
 
 ## 📦 Features
