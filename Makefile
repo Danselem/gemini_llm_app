@@ -17,22 +17,31 @@ env:
 	cp .env.example .env
 
 run:
-	uv run -m src.llm.quick
+	uv run -m examples.quick
 
 run-think:
-	uv run -m src.llm.think
+	uv run -m examples.think
 
 run-safety:
-	uv run -m src.llm.safety
+	uv run -m examples.safety
 
 run-struct:
-	uv run -m src.llm.struct
+	uv run -m examples.struct
 
 run-funccall:
-	uv run -m src.llm.funccall
+	uv run -m examples.funccall
 
 run-search:
-	uv run -m src.llm.search
+	uv run -m examples.search
 
 run-image:
-	uv run -m src.llm.ima_gen
+	uv run -m examples.ima_gen
+
+run-sum:
+	uv run -m examples.psumm
+
+run-sum2:
+	uv run -m examples.psumm2
+
+rag:
+	uv run -m examples.rag.app

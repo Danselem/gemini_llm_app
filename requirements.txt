@@ -4,3 +4,13 @@ playwright
 requests
 google-adk
 crewai-tools
+langchain
+langchain_community
+langchain-google-genai
+unstructured
+chromadb
+unstructured_inference
+pillow-heif
+pypdf
+pdf2image
+unstructured_pytesseract

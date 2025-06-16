@@ -1,8 +1,9 @@
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from google import genai
+from src.llm.utils import _set_env
 
-load_dotenv()
+_set_env("GOOGLE_API_KEY")
 
 def get_client():
     if os.getenv("GOOGLE_API_KEY") is None:

@@ -1,0 +1,5 @@
+This document is an academic paper titled "The stellar population in the SARAO MeerKAT Galactic Plane Survey".
+
+The authors report on the selection of stellar counterparts to radio sources detected by the SARAO MeerKAT 1.3 GHz radio continuum survey of the Galactic plane. They cross-matched MeerKAT source positions with Gaia DR3 using two approaches: one evaluating chance alignments and using AllWISE infrared color information, and another utilizing a Monte Carlo method to evaluate cross-matching reliability. This resulted in a catalog of 629 potential stellar counterparts, with 169 already classified in SIMBAD.
+
+Analysis of the color-magnitude diagram revealed a diverse population of objects ranging from massive OB stars to white dwarfs, some showing strong Hα emission indicating magnetic activity. While MeerKAT's sensitivity is ideal for detecting faint radio sources, its resolution limits counterpart identification in crowded fields. Higher resolution radio observations and circular polarization studies are required to strengthen the associations.
