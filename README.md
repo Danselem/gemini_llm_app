@@ -1,10 +1,15 @@
 # 🔮 Google Gemini LLM App
 
-A demonstration project for building LLM applications using Google's **Gemini models**, with **LangChain**, **ChromaDB**, and **Retrieval-Augmented Generation (RAG)**. This app shows how to load documents, embed them, store in a vector DB, and answer queries based on context.
-
 ## 👤 Author
 
 - **Daniel Egbo** – [@Danselem](https://github.com/Danselem)
+
+---
+A demonstration project for building LLM applications using Google's **Gemini models**, with **LangChain**, **ChromaDB**, and **Retrieval-Augmented Generation (RAG)**. This app shows how to load documents, embed them, store in a vector DB, and answer queries based on context.
+
+**Update**: Tracing has been integrated into the project with Arize Open Inference Telemetry to log traces and spans.
+
+
 
 ---
 
@@ -17,7 +22,8 @@ A demonstration project for building LLM applications using Google's **Gemini mo
 - 🗃️ ChromaDB as the vector store
 - 🔎 Semantic search for relevant document chunks
 - 💬 Question-answering using a RAG pipeline
-- 🧪 Includes example usage with IRS documents
+- 📈 **Tracing and observability** with [Arize Open Inference](https://github.com/Arize-ai/openinference) for end-to-end span-level logging
+- 🧪 Includes example usage in the examples directory
 
 ---
 
@@ -109,6 +115,14 @@ Create a `.env` file at the project root and fill the environment variables with
 GOOGLE_API_KEY=your_gemini_api_key
 MULTIMODAL_MODEL=gemini-1.5-flash
 ```
+---
+
+## 📈 Start the Telemetry Server
+This project uses the `Arize` Open Inference for telemetry and logging of traces and spans. To start the telemetry server, run the command below.
+```bash
+make phoenix
+```
+
 ---
 ## ▶️ Run the App
 There are multiple examples in the `examples` directory for you to get started with, e.g.:
