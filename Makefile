@@ -16,6 +16,9 @@ delete:
 env:
 	cp .env.example .env
 
+phoenix:
+	uv run phoenix serve &
+
 run:
 	uv run -m examples.quick
 

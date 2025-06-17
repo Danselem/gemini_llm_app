@@ -1,11 +1,13 @@
 import os
+from pathlib import Path
 import sys
 import logging
 
 logging_str = "[%(asctime)s: %(levelname)s: %(module)s: %(message)s]"
 
-log_dir = "config"
-log_filepath = os.path.join(log_dir,"logging_config.yaml")
+log_dir = Path("logs")
+log_dir.mkdir(parents=True, exist_ok=True)
+log_filepath = os.path.join(log_dir,"running_logs.log")
 os.makedirs(log_dir, exist_ok=True)
 
 
