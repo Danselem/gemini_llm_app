@@ -2,8 +2,10 @@ from dotenv import load_dotenv
 from google.genai import types
 from google.genai.types import Tool, GoogleSearch
 from src.llm.gemini_client import get_client
+from src.observability.arize_observability import init_genai_observability
 load_dotenv()
 
+init_genai_observability()
 model = "gemini-2.0-flash-001"
 client = get_client()
 

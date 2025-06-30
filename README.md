@@ -22,8 +22,10 @@ A demonstration project for building LLM applications using Google's **Gemini mo
 - 🗃️ ChromaDB as the vector store
 - 🔎 Semantic search for relevant document chunks
 - 💬 Question-answering using a RAG pipeline
-- 📈 **Tracing and observability** with [Arize Open Inference](https://github.com/Arize-ai/openinference) for end-to-end span-level logging
+- 📈 **Tracing and observability** with [Arize Open Inference](https://github.com/Arize-ai/openinference) for end-to-end span-level logging. **Phoenix Open Inference has been persisted with PostgreSQL and has been containerized with Docker.** See the [docker-compose](docker-compose.yaml) file.
 - 🧪 Includes example usage in the examples directory
+
+**Note:** Sentence [transformer embeddings](https://huggingface.co/sentence-transformers) has been integrated into the project, see the [embedding module](src/embeddings/sentence_embedding.py). 
 
 ---
 
@@ -77,6 +79,7 @@ gemini_llm_app/
 │   │   ├── __init__.py
 │   │   └── templates.py
 │   └── utils
+        ├── doc_loader.py
 │       ├── doc_split.py
 │       ├── download_file.py
 │       ├── logger.py
@@ -120,8 +123,9 @@ MULTIMODAL_MODEL=gemini-1.5-flash
 ## 📈 Start the Telemetry Server
 This project uses the `Arize` Open Inference for telemetry and logging of traces and spans. To start the telemetry server, run the command below.
 ```bash
-make phoenix
+make start-phoenix
 ```
+Note, ensure your `Docker` software is running before running the above command.
 
 ---
 ## ▶️ Run the App
@@ -133,6 +137,11 @@ python -m examples.psumm
 or
 ```bash
 make psumm
+```
+
+To run the `RAG` app, use the command below:
+```bash
+make app
 ```
 The example code summarises a pdf file. There are multiple examples in the `examples` directory. You can also check out the `Makefile` to see other examples.
 
@@ -146,7 +155,7 @@ The PDF is downloaded from a URL if it's not already in `data/pdfs`.
 The PDF is split into overlapping chunks using `RecursiveCharacterTextSplitter` from LangChain.
 
 ### 3. Embeddings
-Each chunk is converted into a vector using Google Gemini Embedding (via LangChain wrapper).
+Each chunk is converted into a vector using Google Gemini Embedding or Sentence Transformer Embedding (via LangChain wrapper).
 
 ### 4. Vector Store
 The chunks and their embeddings are stored in a local ChromaDB collection.
@@ -162,6 +171,10 @@ The relevant chunks are passed to Gemini to answer the question contextually.
 * LangChain
 
 * ChromaDB
+
+* Phoenix
+
+* Open Inference
 
 * Google Gemini API
 

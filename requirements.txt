@@ -8,7 +8,7 @@ langchain
 langchain_community
 langchain-google-genai
 unstructured
-chromadb
+langchain_chroma
 unstructured_inference
 pillow-heif
 pypdf
@@ -19,3 +19,6 @@ arize-phoenix-otel
 opentelemetry-api
 opentelemetry-sdk
 openinference-instrumentation-google-genai
+openinference-instrumentation-langchain
+langchain_huggingface
+sentence-transformers

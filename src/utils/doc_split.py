@@ -1,8 +1,9 @@
 from pathlib import Path
 from typing import List
 from langchain_community.document_loaders import TextLoader, UnstructuredPDFLoader
-from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTextSplitter
 from langchain.schema import Document  # or langchain_core.documents.Document
+from src.utils.logger import logger
 
 
 def get_split_documents(index_path: Path) -> List[Document]:
@@ -32,3 +33,36 @@ def get_split_documents(index_path: Path) -> List[Document]:
             print(f"Failed to process {file_path.name}: {e}")
 
     return split_docs
+
+
+
+
+
+def split_documents(documents):
+    """
+    Split documents into smaller chunks for processing.
+    
+    Args:
+        documents (list): List of documents to be split.
+        
+    Returns:
+        list: List of document chunks.
+    """
+    if not documents:
+        logger.warning("No documents provided to split.")
+        return []
+
+    logger.info(f"Splitting {len(documents)} documents into chunks")
+    
+    # Initialize the text splitter
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,  # Size of each chunk
+        chunk_overlap=200  # Overlap between chunks
+    )
+    
+    # Split the documents
+    chunks = text_splitter.split_documents(documents)
+    
+    logger.info(f"Created {len(chunks)} chunks from {len(documents)} documents")
+    
+    return chunks

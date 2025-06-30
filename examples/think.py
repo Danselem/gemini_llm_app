@@ -2,13 +2,13 @@ from google.genai import types
 from pathlib import Path
 from typing import Union
 from src.handlers.error_handler import APIError, ClientError
-from src.observability.arize_observability import init_observability
+from src.observability.arize_observability import init_genai_observability
 from google.genai.errors import ClientError as GoogleClientError
 from google.genai.types import GenerateContentResponse
 from src.llm.gemini_client import get_client
 from src.utils.logger import logger
 
-init_observability()
+init_genai_observability()
 
 MODEL_ID = "gemini-2.5-flash-preview-04-17"
 

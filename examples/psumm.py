@@ -4,10 +4,13 @@ from typing import Union
 from google.genai.errors import ClientError as GoogleClientError
 from google.genai.types import GenerateContentResponse
 
+from src.observability.arize_observability import init_genai_observability
+
 from src.llm.gemini_client import get_client
 from src.handlers.error_handler import APIError, ClientError
 from src.utils.logger import logger
 
+init_genai_observability()
 client = get_client()
 
 MODEL_ID: str = 'gemini-2.0-flash-001'

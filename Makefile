@@ -19,6 +19,9 @@ env:
 phoenix:
 	uv run phoenix serve &
 
+start-phoenix:
+	uv run docker-compose up -d
+
 run:
 	uv run -m examples.quick
 

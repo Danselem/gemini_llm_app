@@ -1206,9 +1206,12 @@ dependencies = [
     { name = "google-adk" },
     { name = "google-genai" },
     { name = "langchain" },
+    { name = "langchain-chroma" },
     { name = "langchain-community" },
     { name = "langchain-google-genai" },
+    { name = "langchain-huggingface" },
     { name = "openinference-instrumentation-google-genai" },
+    { name = "openinference-instrumentation-langchain" },
     { name = "opentelemetry-api" },
     { name = "opentelemetry-sdk" },
     { name = "pdf2image" },
@@ -1218,6 +1221,7 @@ dependencies = [
     { name = "pypdf" },
     { name = "python-dotenv" },
     { name = "requests" },
+    { name = "sentence-transformers" },
     { name = "unstructured" },
     { name = "unstructured-inference" },
     { name = "unstructured-pytesseract" },
@@ -1232,9 +1236,12 @@ requires-dist = [
     { name = "google-adk", specifier = ">=1.3.0" },
     { name = "google-genai", specifier = ">=1.20.0" },
     { name = "langchain", specifier = ">=0.3.25" },
+    { name = "langchain-chroma", specifier = ">=0.2.3" },
     { name = "langchain-community", specifier = ">=0.3.25" },
     { name = "langchain-google-genai", specifier = ">=2.1.5" },
+    { name = "langchain-huggingface", specifier = ">=0.3.0" },
     { name = "openinference-instrumentation-google-genai", specifier = ">=0.1.2" },
+    { name = "openinference-instrumentation-langchain", specifier = ">=0.1.43" },
     { name = "opentelemetry-api", specifier = ">=1.34.1" },
     { name = "opentelemetry-sdk", specifier = ">=1.34.1" },
     { name = "pdf2image", specifier = ">=1.17.0" },
@@ -1244,6 +1251,7 @@ requires-dist = [
     { name = "pypdf", specifier = ">=5.6.0" },
     { name = "python-dotenv", specifier = ">=1.1.0" },
     { name = "requests", specifier = ">=2.32.4" },
+    { name = "sentence-transformers", specifier = ">=4.1.0" },
     { name = "unstructured", specifier = ">=0.17.2" },
     { name = "unstructured-inference", specifier = ">=1.0.5" },
     { name = "unstructured-pytesseract", specifier = ">=0.3.15" },
@@ -2343,6 +2351,20 @@ wheels = [
 ]
 
 [[package]]
+name = "langchain-chroma"
+version = "0.2.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "chromadb" },
+    { name = "langchain-core" },
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ee/6a/f8e26b3ce1a7958beabf2e5776695781f93e87d245e1a6a62a316af7fca4/langchain_chroma-0.2.3.tar.gz", hash = "sha256:b880f3cfe9843b5a51039cb65f7102717518ef6b3117e6f9df54202273538494", size = 15828 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4f/84/ab3afa3bb5e0792ea6ed3a5b44e5233aa6bd3313ca6a1ae58cb7e48903b1/langchain_chroma-0.2.3-py3-none-any.whl", hash = "sha256:d139f44a41f128cba5ee321a14817f0a1ffaeaed8576204baaf01f58cfe685a4", size = 11303 },
+]
+
+[[package]]
 name = "langchain-cohere"
 version = "0.3.5"
 source = { registry = "https://pypi.org/simple" }
@@ -2426,6 +2448,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/2a/a5/d9b8d5afdf4a33f13e7d973f2705891cd13cc1dfb578719c9861a8d8385b/langchain_google_genai-2.1.5.tar.gz", hash = "sha256:6e71375a7707667bdecc5a7d1c86438ec10f2c7bb6dc6e3f095f5b22523c4fc9", size = 40813 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5e/70/0747358eca996f713f715e2bfc2d0805804f8f705af57381fbee91bb475a/langchain_google_genai-2.1.5-py3-none-any.whl", hash = "sha256:6c8ccaf33a41f83b1d08a2398edbf47a1eebea27a7ec6930f34a0c019f309253", size = 44788 },
+]
+
+[[package]]
+name = "langchain-huggingface"
+version = "0.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "huggingface-hub" },
+    { name = "langchain-core" },
+    { name = "tokenizers" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3d/72/5f32c8e6db4d94c00252318aa7910102134b4bd6b2af1b13f2042f7f95f6/langchain_huggingface-0.3.0.tar.gz", hash = "sha256:d1cf93fb4d4eafc8b44edcd5fba904b27cbd3fda6cdef0e2321fbcf4efcda822", size = 24823 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c1/da/7446c2eeacd420cb975ceb49c6feca7be40cf8ed3686a128ca78410c148f/langchain_huggingface-0.3.0-py3-none-any.whl", hash = "sha256:aab85d57e649c805d2f2a9f8d72d87b5d12c45dd4831309ac9c37753ddb237ed", size = 27359 },
 ]
 
 [[package]]
@@ -3285,6 +3321,23 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7d/87/c730b40c0a67a6f2a01f60d2daf8fa4e1574a2a26f22d6167181add671ab/openinference_instrumentation_google_genai-0.1.2.tar.gz", hash = "sha256:8eec5bc7e3619ab501d33a62e7302fd990f5485c2141e6f5169ae73cfc901eba", size = 21266 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9d/5f/d261bd7f61f8282eb00bc2a1ab18bea23c049f831468a0d24a933cabc9b3/openinference_instrumentation_google_genai-0.1.2-py3-none-any.whl", hash = "sha256:8725489c955cdebc89ea5815c3dfcea38f351e28792987b506706eecfaa37167", size = 19257 },
+]
+
+[[package]]
+name = "openinference-instrumentation-langchain"
+version = "0.1.43"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "openinference-instrumentation" },
+    { name = "openinference-semantic-conventions" },
+    { name = "opentelemetry-api" },
+    { name = "opentelemetry-instrumentation" },
+    { name = "opentelemetry-semantic-conventions" },
+    { name = "wrapt" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/69/84/f85ea5c4b73ee6570f5f4a0a247243fc08cde8ed3b5c4ae40df7b9580c38/openinference_instrumentation_langchain-0.1.43.tar.gz", hash = "sha256:18b5ac3ba52fcb85a576dd94175e025c6cbacce9cb2619a8f8b281b2c30e06cb", size = 52212 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/27/b1/08b85cf9af64d8e994e554edda3898af5563b9b6073f6690a463af67338d/openinference_instrumentation_langchain-0.1.43-py3-none-any.whl", hash = "sha256:66645839eac2c3cf986bc917ef309dc89c468f3bb0a56b20eaba6c89b8b44e9a", size = 18776 },
 ]
 
 [[package]]
@@ -4812,6 +4865,25 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/8e/038ccfe29d272b30086b25a4960f757f97122cb2ec42e62b460d02fe98e9/scipy-1.15.3-cp313-cp313t-musllinux_1_2_aarch64.whl", hash = "sha256:40e54d5c7e7ebf1aa596c374c49fa3135f04648a0caabcb66c52884b943f02b4", size = 36393132 },
     { url = "https://files.pythonhosted.org/packages/10/7e/5c12285452970be5bdbe8352c619250b97ebf7917d7a9a9e96b8a8140f17/scipy-1.15.3-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:5e721fed53187e71d0ccf382b6bf977644c533e506c4d33c3fb24de89f5c3ed5", size = 38979503 },
     { url = "https://files.pythonhosted.org/packages/81/06/0a5e5349474e1cbc5757975b21bd4fad0e72ebf138c5592f191646154e06/scipy-1.15.3-cp313-cp313t-win_amd64.whl", hash = "sha256:76ad1fb5f8752eabf0fa02e4cc0336b4e8f021e2d5f061ed37d6d264db35e3ca", size = 40308097 },
+]
+
+[[package]]
+name = "sentence-transformers"
+version = "4.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "huggingface-hub" },
+    { name = "pillow" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+    { name = "torch" },
+    { name = "tqdm" },
+    { name = "transformers" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/73/84/b30d1b29ff58cfdff423e36a50efd622c8e31d7039b1a0d5e72066620da1/sentence_transformers-4.1.0.tar.gz", hash = "sha256:f125ffd1c727533e0eca5d4567de72f84728de8f7482834de442fd90c2c3d50b", size = 272420 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/45/2d/1151b371f28caae565ad384fdc38198f1165571870217aedda230b9d7497/sentence_transformers-4.1.0-py3-none-any.whl", hash = "sha256:382a7f6be1244a100ce40495fb7523dbe8d71b3c10b299f81e6b735092b3b8ca", size = 345695 },
 ]
 
 [[package]]
