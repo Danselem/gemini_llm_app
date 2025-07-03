@@ -22,3 +22,7 @@ openinference-instrumentation-google-genai
 openinference-instrumentation-langchain
 langchain_huggingface
 sentence-transformers
+flashrank
+rank_llm
+langchain-graph-retriever
+langchain-graph-retriever[chroma]

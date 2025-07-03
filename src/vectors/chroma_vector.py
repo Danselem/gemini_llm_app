@@ -68,7 +68,7 @@ def get_chroma_load(collection_name: str, embeddings, directory: Path):
 
     # Initialize the vector store
     vector_store = Chroma(
-        collection_name=collection_name,  # replace with "my_custom_index" for custom documents option
+        collection_name=collection_name,  # Use the collection name to load the specific collection
         embedding_function=embeddings,
         persist_directory=directory.as_posix(),
         )

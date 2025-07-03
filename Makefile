@@ -22,6 +22,9 @@ phoenix:
 start-phoenix:
 	uv run docker-compose up -d
 
+stop-phoenix:
+	uv run docker-compose down	
+
 run:
 	uv run -m examples.quick
 
