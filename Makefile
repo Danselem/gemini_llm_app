@@ -20,7 +20,9 @@ phoenix:
 	uv run phoenix serve &
 
 start-phoenix:
+	@echo "Starting a Docker compose..."
 	uv run docker-compose up -d
+	@echo "Started running Docker compose..."
 
 stop-phoenix:
 	uv run docker-compose down	
