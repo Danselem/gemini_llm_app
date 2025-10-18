@@ -4,17 +4,18 @@ import io
 from pathlib import Path
 from typing import Union
 
-from PIL import Image
 from google.genai import types
 from google.genai.errors import ClientError as GoogleClientError
 from google.genai.types import GenerateContentResponse
+from PIL import Image
 
-from src.llm.gemini_client import get_client
 from src.handlers.error_handler import APIError, ClientError
+from src.llm.gemini_client import get_client
 from src.utils.logger import logger
 
 client = get_client()
-model: str = 'imagen-3.0-generate-002'
+model: str = "imagen-3.0-generate-002"
+
 
 def generate_and_save_image(prompt: str, output_path: Union[str, Path]) -> None:
     """
@@ -35,7 +36,7 @@ def generate_and_save_image(prompt: str, output_path: Union[str, Path]) -> None:
             config=types.GenerateImagesConfig(
                 number_of_images=1,
                 include_rai_reason=True,
-                output_mime_type='image/jpeg'
+                output_mime_type="image/jpeg",
             ),
         )
 
@@ -56,8 +57,11 @@ def generate_and_save_image(prompt: str, output_path: Union[str, Path]) -> None:
         logger.exception("Unexpected error while generating image")
         raise APIError(str(e))
 
+
 if __name__ == "__main__":
-    prompt: str = 'An umbrella in the foreground, and a rainy night sky in the background'
+    prompt: str = (
+        "An umbrella in the foreground, and a rainy night sky in the background"
+    )
     data_path: Path = Path("data/image/outputs")
     data_path.mkdir(parents=True, exist_ok=True)
 

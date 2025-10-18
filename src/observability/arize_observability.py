@@ -1,4 +1,5 @@
 import os
+
 from openinference.instrumentation.google_genai import GoogleGenAIInstrumentor
 from openinference.instrumentation.langchain import LangChainInstrumentor
 from openinference.semconv.resource import ResourceAttributes
@@ -19,7 +20,7 @@ def init_genai_observability():
     trace_api.set_tracer_provider(tracer_provider=tracer_provider)
     GoogleGenAIInstrumentor().instrument()
     print("🔭 OpenInference instrumentation enabled.")
-    
+
 
 def init_langchain_observability():
     collector_endpoint = os.getenv("COLLECTOR_ENDPOINT")

@@ -6,10 +6,9 @@ from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.prompts import PromptTemplate
 
-from src.embeddings.gemini_embedding import get_google_embeddings
 from src.embeddings.sentence_embedding import get_sentence_embeddings
 from src.llm.gemini_client import get_client
-from src.llm.lang_gemini import get_langchain_llm
+from src.llm.lang_gemini import get_gemini_llm
 from src.observability.arize_observability import init_langchain_observability
 from src.prompt_engineering.templates import ai_assistant_template
 from src.utils.doc_loader import load_documents_from_directory
@@ -35,7 +34,7 @@ def main() -> None:
 
     # Initialize components
     client = get_client()
-    llm = get_langchain_llm(model="gemini-2.0-flash")
+    llm = get_gemini_llm(model="gemini-2.0-flash")
     # embeddings = get_google_embeddings()
     embeddings = get_sentence_embeddings()
 
@@ -46,19 +45,18 @@ def main() -> None:
     chunks = split_documents(documents)
 
     # Vector store
-    db = get_chroma_ingest(
+    get_chroma_ingest(
         embeddings=embeddings,
         chunks=chunks,
         directory=str(persist_path),
         collection_name="pdf",
     )
-    # db.persist()
 
     # Retriever and chain setup
     retriever = get_chroma_load(
         embeddings=embeddings, directory=persist_path, collection_name="pdf"
     )
-    # retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 3})
+
     prompt = PromptTemplate.from_template(ai_assistant_template)
 
     combine_docs_chain = create_stuff_documents_chain(llm, prompt)

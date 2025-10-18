@@ -1,9 +1,12 @@
+import os
 from pathlib import Path
 from typing import List
-import os
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
+
 from src.utils.logger import logger
+
 
 def load_documents_from_directory(docs_dir: Path) -> List[Document]:
     """
@@ -17,11 +20,14 @@ def load_documents_from_directory(docs_dir: Path) -> List[Document]:
     """
     if not docs_dir.exists() or not docs_dir.is_dir():
         logger.error(f"The directory {docs_dir} does not exist or is not a directory.")
-        raise ValueError(f"The directory {docs_dir} does not exist or is not a directory.")
+        raise ValueError(
+            f"The directory {docs_dir} does not exist or is not a directory."
+        )
 
     # Sort file paths to ensure consistent order across runs
     all_files = sorted(
-        os.path.join(docs_dir, f) for f in os.listdir(docs_dir)
+        os.path.join(docs_dir, f)
+        for f in os.listdir(docs_dir)
         if os.path.isfile(os.path.join(docs_dir, f))
     )
 

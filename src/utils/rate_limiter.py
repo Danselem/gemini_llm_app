@@ -1,4 +1,5 @@
 import time
+
 from langchain_core.rate_limiters import InMemoryRateLimiter
 
 rate_limiter = InMemoryRateLimiter(
@@ -6,6 +7,7 @@ rate_limiter = InMemoryRateLimiter(
     check_every_n_seconds=0.1,  # Wake up every 100 ms to check whether allowed to make a request,
     max_bucket_size=10,  # Controls the maximum burst size.
 )
+
 
 def rate_limit(max_per_minute):
     period = 60 / max_per_minute

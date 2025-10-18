@@ -27,6 +27,22 @@ start-phoenix:
 stop-phoenix:
 	uv run docker-compose down	
 
+quality_checks:
+	@echo "Running quality checks"
+	uv run -m isort .
+	uv run -m black .
+
+# Clean generated files
+clean:
+	@echo "🧹 Cleaning up..."
+	find . -type f -name "*.pyc" -delete
+	find . -type d -name "__pycache__" -delete
+	find . -type d -name "*.egg-info" -exec rm -rf {} +
+	rm -rf .pytest_cache
+	rm -rf htmlcov
+	rm -rf .coverage
+	@echo "Cleanup completed"
+
 run:
 	uv run -m examples.quick
 
@@ -55,4 +71,20 @@ run-sum2:
 	uv run -m examples.psumm2
 
 rag:
-	uv run -m examples.rag.app
+	uv run -m src.rag.app
+
+hybrid:
+	uv run -m src.rag.apphybrid
+
+lcel:
+	uv run -m src.rag.lcel
+
+ingest:
+	uv run -m src.ingest
+
+make test:
+	@echo "Running tests with coverage..."
+	uv run -m pytest tests -v
+
+tree:
+	uv run tree -I "config|data|examples|logs|storage"

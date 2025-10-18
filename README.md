@@ -33,60 +33,53 @@ A demonstration project for building LLM applications using Google's **Gemini mo
 
 ```text
 gemini_llm_app/
-├── config
-│   └── logging_config.yaml
-├── data
-│   ├── embeddings
-│   ├── image
-│   │   └── outputs
-│   ├── outputs
-│   │   ├── safety_output.txt
-│   │   └── think_output.txt
-│   ├── pdfs
-│   │   └── p554.pdf
-│   └── prompts
+.
+├── docker-compose.yaml
 ├── Dockerfile
-├── examples
-│   ├── __init__.py
-│   ├── funccall.py
-│   ├── ima_gen.py
-│   ├── psumm.py
-│   ├── psumm2.py
-│   ├── quick.py
-│   ├── rag
-│   │   └── app.py
-│   ├── safety.py
-│   ├── search.py
-│   ├── struct.py
-│   └── think.py
 ├── LICENSE
 ├── Makefile
 ├── pyproject.toml
 ├── README.md
 ├── requirements.txt
 ├── src
+│   ├── agent
+│   │   └── tools.py
 │   ├── embeddings
-│   │   └── gemini_embedding.py
+│   │   ├── gemini_embedding.py
+│   │   └── sentence_embedding.py
 │   ├── handlers
 │   │   ├── __init__.py
-│   │   │   └── error_handler.cpython-311.pyc
 │   │   └── error_handler.py
+│   ├── ingest.py
 │   ├── llm
 │   │   ├── gemini_client.py
-│   │   ├── lang_gemini.py
-│   │   └── utils.py
+│   │   └── lang_gemini.py
+│   ├── observability
+│   │   └── arize_observability.py
 │   ├── prompt_engineering
 │   │   ├── __init__.py
+│   │   ├── prompt.py
 │   │   └── templates.py
-│   └── utils
-        ├── doc_loader.py
-│       ├── doc_split.py
-│       ├── download_file.py
-│       ├── logger.py
-│       └── rate_limiter.py
-├── storage
-│   └── chroma
-│       └── chroma.sqlite3
+│   ├── rag
+│   │   ├── app.py
+│   │   ├── apphybrid.py
+│   │   ├── hybrid.py
+│   │   └── lcel.py
+│   ├── retrievers
+│   │   └── retriever.py
+│   ├── utils
+│   │   ├── doc_loader.py
+│   │   ├── doc_split.py
+│   │   ├── download_file.py
+│   │   ├── logger.py
+│   │   ├── rate_limiter.py
+│   │   └── setvars.py
+│   └── vectors
+│       └── chroma_vector.py
+├── tests
+│   ├── test_chroma_vector_pdf.py
+│   ├── test_ingest_pdf.py
+│   └── test_ingest.py
 └── uv.lock
 ```
 ---
@@ -177,8 +170,6 @@ The relevant chunks are passed to Gemini to answer the question contextually.
 * Open Inference
 
 * Google Gemini API
-
-* Poppler
 
 * Python 3.11+
 

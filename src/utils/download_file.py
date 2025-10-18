@@ -1,5 +1,6 @@
-import requests
 from pathlib import Path
+
+import requests
 
 
 def download_file(url: str, dest_folder: Path) -> None:

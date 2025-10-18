@@ -1,8 +1,10 @@
 from dotenv import load_dotenv
 from google.genai import types
-from google.genai.types import Tool, GoogleSearch
+from google.genai.types import GoogleSearch, Tool
+
 from src.llm.gemini_client import get_client
 from src.observability.arize_observability import init_genai_observability
+
 load_dotenv()
 
 init_genai_observability()
@@ -15,7 +17,9 @@ response = client.models.generate_content(
     model=model,
     contents=prompt,
     config=types.GenerateContentConfig(
-        tools=[Tool(google_search=GoogleSearch())], # <== Note the use of the GoogleSearch tool
+        tools=[
+            Tool(google_search=GoogleSearch())
+        ],  # <== Note the use of the GoogleSearch tool
     ),
 )
 

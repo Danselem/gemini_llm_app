@@ -26,3 +26,13 @@ flashrank
 rank_llm
 langchain-graph-retriever
 langchain-graph-retriever[chroma]
+langgraph
+langchain-tavily
+duckduckgo-search
+wikipedia
+wikibase-rest-api-client
+mediawikiapi
+tavily-python
+isort
+black
+pytest

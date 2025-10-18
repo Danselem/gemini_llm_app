@@ -1,77 +1,150 @@
-from langchain.retrievers.multi_query import MultiQueryRetriever
-from langchain_community.document_compressors.rankllm_rerank import RankLLMRerank
+from typing import Any, Optional
+
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import FlashrankRerank
-from graph_retriever.strategies import Eager
-from langchain_graph_retriever import GraphRetriever
+from langchain.retrievers.multi_query import MultiQueryRetriever
+from langchain_community.document_compressors.rankllm_rerank import RankLLMRerank
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from src.utils.logger import logger
 
 
-def flashrank_retriever(
-    retriever,
-    flashrank_threshold=0.5
-    ):
-    """
-    Compresses the retriever using either RankLLMRerank or FlashrankRerank.
-    
-    Args:
-        retriever: The base retriever to compress.
-        llm: The language model to use for compression.
-        rank_llm: Optional; the RankLLM to use for reranking.
-        flashrank_llm: Optional; the Flashrank LLM to use for reranking.
-        rank_threshold: Threshold for RankLLMRerank.
-        flashrank_threshold: Threshold for FlashrankRerank.
-    
-    Returns:
-        A compressed retriever.
-    """
-    compressor = FlashrankRerank(top_n=5, score_thresholds=flashrank_threshold)
-    compression_retriever = ContextualCompressionRetriever(
-        base_compressor=compressor, base_retriever=retriever
-        )
-    
-    return compression_retriever  # No compression applied
+# Pydantic configs allow arbitrary types (retriever/llm objects)
+class MultiQueryConfig(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    retriever: Any
+    llm: Any
+
+    @field_validator("retriever", mode="after")
+    def validate_retriever(cls, v):
+        if v is None:
+            raise ValueError("retriever must be provided")
+        return v
+
+    @field_validator("llm", mode="after")
+    def validate_llm(cls, v):
+        if v is None:
+            raise ValueError("llm must be provided")
+        return v
 
 
-def rankllm_retriever(
-    retriever,
-    rank_llm="zephyr",
-    ):
-    """
-    Compresses the retriever using RankLLMRerank.
-    
-    Args:
-        retriever: The base retriever to compress.
-        rank_llm: The RankLLM to use for reranking.
-        rank_threshold: Threshold for RankLLMRerank.
-    
-    Returns:
-        A compressed retriever.
-    """
-    compressor = RankLLMRerank(model=rank_llm, top_n=5,)
-    compression_retriever = ContextualCompressionRetriever(
-        base_compressor=compressor, base_retriever=retriever
-        )
-    
-    return compression_retriever  # No compression applied  
+class FlashrankConfig(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    retriever: Any
+    flashrank_threshold: float = Field(0.5, ge=0.0, le=1.0)
+    top_n: int = Field(5, ge=1)
+
+    @field_validator("retriever", mode="after")
+    def validate_retriever(cls, v):
+        if v is None:
+            raise ValueError("retriever must be provided")
+        return v
+
+
+class RankLLMConfig(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    retriever: Any
+    rank_llm: str = "zephyr"
+    top_n: int = Field(5, ge=1)
+
+    @field_validator("retriever", mode="after")
+    def validate_retriever(cls, v):
+        if v is None:
+            raise ValueError("retriever must be provided")
+        return v
 
 
 def multi_query_retriever(
     retriever,
     llm,
-    ):
+):
     """
     Creates a MultiQueryRetriever with the specified retriever and LLM.
-    
+
     Args:
         retriever: The base retriever to use.
         llm: The language model to use for generating queries.
-        top_k: Number of top results to return.
-    
+
     Returns:
         A MultiQueryRetriever instance.
     """
-    multi_query_retriever = MultiQueryRetriever.from_llm(
-        retriever=retriever, llm=llm,
+    cfg = MultiQueryConfig(retriever=retriever, llm=llm)
+
+    try:
+        mqr = MultiQueryRetriever.from_llm(
+            retriever=cfg.retriever,
+            llm=cfg.llm,
         )
-    
-    return multi_query_retriever
+    except Exception as e:
+        logger.exception("Failed to create MultiQueryRetriever: %s", e)
+        raise
+
+    return mqr
+
+
+def flashrank_retriever(
+    retriever, flashrank_threshold: Optional[float] = 0.5, top_n: Optional[int] = 5
+):
+    """
+    Compresses the retriever using FlashrankRerank.
+
+    Args:
+        retriever: The base retriever to compress.
+        flashrank_threshold: Threshold for FlashrankRerank (0.0 - 1.0).
+        top_n: Number of top documents to consider.
+
+    Returns:
+        A compressed retriever.
+    """
+    try:
+        cfg = FlashrankConfig(
+            retriever=retriever, flashrank_threshold=flashrank_threshold, top_n=top_n
+        )
+
+        compressor = FlashrankRerank(
+            top_n=cfg.top_n, score_thresholds=cfg.flashrank_threshold
+        )
+        compression_retriever = ContextualCompressionRetriever(
+            base_compressor=compressor, base_retriever=cfg.retriever
+        )
+    except Exception as e:
+        logger.exception("flashrank_retriever failed: %s", e)
+        raise
+
+    return compression_retriever
+
+
+def rankllm_retriever(
+    retriever,
+    rank_llm: Optional[str] = "zephyr",
+    top_n: Optional[int] = 5,
+):
+    """
+    Compresses the retriever using RankLLMRerank.
+
+    Args:
+        retriever: The base retriever to compress.
+        rank_llm: The RankLLM model name to use for reranking.
+        top_n: Number of top documents to consider.
+
+    Returns:
+        A compressed retriever.
+    """
+    try:
+        cfg = RankLLMConfig(retriever=retriever, rank_llm=rank_llm, top_n=top_n)
+
+        compressor = RankLLMRerank(
+            model=cfg.rank_llm,
+            top_n=cfg.top_n,
+        )
+        compression_retriever = ContextualCompressionRetriever(
+            base_compressor=compressor, base_retriever=cfg.retriever
+        )
+    except Exception as e:
+        logger.exception("rankllm_retriever failed: %s", e)
+        raise
+
+    return compression_retriever

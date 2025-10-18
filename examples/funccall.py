@@ -1,8 +1,9 @@
+import random
+
 from dotenv import load_dotenv
 from google.genai import types
-import random
-from src.llm.gemini_client import get_client
 
+from src.llm.gemini_client import get_client
 
 load_dotenv()
 model = "gemini-2.0-flash-001"
@@ -66,7 +67,7 @@ Speak like an excitable weather announcer.
 Return your final response in Markdown using bullets if multiple cities are requested.
 """
 
-prompt="""
+prompt = """
 What is the weather like in Boston, Philadelphia, Nashville, Atlanta,
 Houston, Chicago, Salt Lake City, Seattle, Las Vegas, and San Francisco?
 """

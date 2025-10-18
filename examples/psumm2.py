@@ -1,19 +1,20 @@
-import requests
 from pathlib import Path
 from typing import Union
+
+import requests
 from google.genai import types
 from google.genai.errors import ClientError as GoogleClientError
 from google.genai.types import GenerateContentResponse
-from src.observability.arize_observability import init_genai_observability
 
-from src.llm.gemini_client import get_client
 from src.handlers.error_handler import APIError, ClientError
+from src.llm.gemini_client import get_client
+from src.observability.arize_observability import init_genai_observability
 from src.utils.logger import logger
 
 init_genai_observability()
 client = get_client()
 
-MODEL_ID: str = 'gemini-2.0-flash-001'
+MODEL_ID: str = "gemini-2.0-flash-001"
 
 
 def generate_summary(prompt: str, output_path: Union[str, Path]) -> None:
@@ -30,12 +31,11 @@ def generate_summary(prompt: str, output_path: Union[str, Path]) -> None:
     """
     try:
         response: GenerateContentResponse = client.models.generate_content(
-            model=MODEL_ID,
-            contents=prompt
-            )
+            model=MODEL_ID, contents=prompt
+        )
 
         if response.text:
-            with open(output_path, 'w') as f:
+            with open(output_path, "w") as f:
                 f.write(response.text)
             logger.info(f"Summary saved to: {output_path}")
         else:
@@ -51,24 +51,20 @@ def generate_summary(prompt: str, output_path: Union[str, Path]) -> None:
         raise APIError(str(e))
 
 
-
 if __name__ == "__main__":
-    pdf_url: str ="https://arxiv.org/pdf/2505.22139"
-    
+    pdf_url: str = "https://arxiv.org/pdf/2505.22139"
+
     # Get the contents of the PDF URL using the Python Requests library
     content = requests.get(pdf_url).content
-    
+
     pdf_part = types.Part.from_bytes(
-      data=content,
-      mime_type="application/pdf" # <=== Set the MIME TYPE to 'application/pdf'
+        data=content,
+        mime_type="application/pdf",  # <=== Set the MIME TYPE to 'application/pdf'
     )
 
     # Create a multi-part prompt
-    prompt = [
-    pdf_part,
-    "Summarize the above content"
-    ]
-    
+    prompt = [pdf_part, "Summarize the above content"]
+
     data_path: Path = Path("data/outputs")
     data_path.mkdir(parents=True, exist_ok=True)
 

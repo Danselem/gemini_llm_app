@@ -1,11 +1,13 @@
-from google.genai import types
 from pathlib import Path
 from typing import Union
-from src.handlers.error_handler import APIError, ClientError
-from src.observability.arize_observability import init_genai_observability
+
+from google.genai import types
 from google.genai.errors import ClientError as GoogleClientError
 from google.genai.types import GenerateContentResponse
+
+from src.handlers.error_handler import APIError, ClientError
 from src.llm.gemini_client import get_client
+from src.observability.arize_observability import init_genai_observability
 from src.utils.logger import logger
 
 init_genai_observability()
@@ -13,6 +15,7 @@ init_genai_observability()
 MODEL_ID = "gemini-2.5-flash-preview-04-17"
 
 client = get_client()
+
 
 def thinking_response(prompt: str, output_path: Union[str, Path]) -> None:
     """
@@ -31,12 +34,14 @@ def thinking_response(prompt: str, output_path: Union[str, Path]) -> None:
             model=MODEL_ID,
             contents=prompt,
             config=types.GenerateContentConfig(
-                thinking_config=types.ThinkingConfig(thinking_budget=1024) # thinkingBudget must be an integer in the range 0 to 24576  
-                ),
-            )
+                thinking_config=types.ThinkingConfig(
+                    thinking_budget=1024
+                )  # thinkingBudget must be an integer in the range 0 to 24576
+            ),
+        )
 
         if response.text:
-            with open(output_path, 'w') as f:
+            with open(output_path, "w") as f:
                 f.write(response.text)
             logger.info(f"Thinking response saved to: {output_path}")
         else:
@@ -53,8 +58,10 @@ def thinking_response(prompt: str, output_path: Union[str, Path]) -> None:
 
 
 if __name__ == "__main__":
-    
-    prompt = "Explain the process of photosynthesis in plants and provide a brief summary."
+
+    prompt = (
+        "Explain the process of photosynthesis in plants and provide a brief summary."
+    )
 
     data_path = Path("data/outputs")
     data_path.mkdir(parents=True, exist_ok=True)
@@ -63,5 +70,3 @@ if __name__ == "__main__":
         thinking_response(prompt, data_path / "think-output.txt")
     except (APIError, ClientError) as err:
         logger.error(f"Thinking generation failed: {err}")
-
-

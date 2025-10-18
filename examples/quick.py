@@ -1,16 +1,19 @@
 from pathlib import Path
 from typing import Union
-from src.handlers.error_handler import APIError, ClientError
-from src.observability.arize_observability import init_genai_observability
+
 from google.genai.errors import ClientError as GoogleClientError
 from google.genai.types import GenerateContentResponse
+
+from src.handlers.error_handler import APIError, ClientError
 from src.llm.gemini_client import get_client
+from src.observability.arize_observability import init_genai_observability
 from src.utils.logger import logger
 
 init_genai_observability()
 MODEL_ID = "gemini-2.0-flash-001"
 
 client = get_client()
+
 
 def generate_response(prompt: str, output_path: Union[str, Path]) -> None:
     """
@@ -26,12 +29,11 @@ def generate_response(prompt: str, output_path: Union[str, Path]) -> None:
     """
     try:
         response: GenerateContentResponse = client.models.generate_content(
-            model=MODEL_ID,
-            contents=prompt
-            )
+            model=MODEL_ID, contents=prompt
+        )
 
         if response.text:
-            with open(output_path, 'w') as f:
+            with open(output_path, "w") as f:
                 f.write(response.text)
             logger.info(f"Summary saved to: {output_path}")
         else:
@@ -47,9 +49,10 @@ def generate_response(prompt: str, output_path: Union[str, Path]) -> None:
         raise APIError(str(e))
 
 
-
 if __name__ == "__main__":
-    prompt = "What's the largest asteroid in the solar system and provide a brief summary."
+    prompt = (
+        "What's the largest asteroid in the solar system and provide a brief summary."
+    )
 
     data_path: Path = Path("data/outputs")
     data_path.mkdir(parents=True, exist_ok=True)
@@ -58,8 +61,3 @@ if __name__ == "__main__":
         generate_response(prompt, data_path / "planet-output.txt")
     except (APIError, ClientError) as err:
         logger.error(f"Summary generation failed: {err}")
-
-
-
-
-
