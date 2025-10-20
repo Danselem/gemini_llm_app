@@ -161,17 +161,17 @@ The relevant chunks are passed to Gemini to answer the question contextually.
 
 ---
 ## 📚 Tech Stack
-* LangChain
 
-* ChromaDB
-
-* Phoenix
-
-* Open Inference
-
-* Google Gemini API
-
-* Python 3.11+
+| Component | Role | Notes |
+| --- | --- | --- |
+| LangChain | Orchestrates prompts, chains, and retrievers | Backbone for LLM workflows |
+| ChromaDB | Vector store for embeddings | Local persistence for RAG |
+| Google Gemini API | Primary LLM / embedding provider | Configurable model (e.g., gemini-1.5-flash) |
+| sentence-transformers | Fallback / local embeddings | all-MiniLM-L6-v2 used via SentenceTransformer |
+| Open Inference (Arize / Phoenix) | Telemetry & tracing | Observability for traces/spans |
+| Redis (RedisSaver) | Short-term memory checkpointing | Used by langgraph checkpointing |
+| Docker / docker-compose | Containerization & local telemetry stack | Phoenix / Postgres services |
+| Python 3.11+ | Runtime | Project tested on Python 3.11 |
 
 ---
 
