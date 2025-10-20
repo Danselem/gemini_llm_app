@@ -2,13 +2,13 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage, RemoveMessage
 from langchain_core.runnables.config import RunnableConfig
 from langgraph.graph.message import MessagesState
-from src.llm.lang_gemini import get_langchain_llm
-from src.utils import RuntimeState
+from src.llm.lang_gemini import get_gemini_llm
+from src.memory.utils import RuntimeState
 from src.utils.logger import logger
 
 
 # An LLM configured for summarization.
-summarizer = get_langchain_llm("gemini-2.0-flash")
+summarizer = get_gemini_llm("gemini-2.0-flash")
 
 # The number of messages after which we'll summarize the conversation.
 MESSAGE_SUMMARIZATION_THRESHOLD = 6

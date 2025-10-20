@@ -76,6 +76,12 @@ rag:
 hybrid:
 	uv run -m src.rag.apphybrid
 
+arag:
+	uv run -m src.rag.agentrag
+
+amrag:
+	uv run -m src.rag.main
+
 lcel:
 	uv run -m src.rag.lcel
 

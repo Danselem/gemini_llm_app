@@ -1,6 +1,6 @@
 from redisvl.index import SearchIndex
 from redisvl.schema.schema import IndexSchema
-from src.utils import get_redis_client
+from src.memory.utils import get_redis_client
 from src.utils.logger import logger
 
 redis_client = get_redis_client()

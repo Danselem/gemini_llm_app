@@ -53,9 +53,10 @@ def main() -> None:
     )
 
     # Retriever and chain setup
-    retriever = get_chroma_load(
+    vector_store = get_chroma_load(
         embeddings=embeddings, directory=persist_path, collection_name="pdf"
     )
+    retriever = vector_store.as_retriever()
 
     prompt = PromptTemplate.from_template(ai_assistant_template)
 

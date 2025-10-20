@@ -14,16 +14,17 @@ embeddings = get_sentence_embeddings()
 
 llm = get_gemini_llm(model="gemini-2.0-flash")
 
-retriever = get_chroma_load(
+vector_store = get_chroma_load(
     embeddings=embeddings,
     directory=Path("storage/chroma"),
     collection_name="pdf",
 )
 
+retriever = vector_store.as_retriever()
+
 prompt = PromptTemplate(
     template=PROMPT_TEMPLATE, input_variables=["context", "question"]
 )
-
 
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)

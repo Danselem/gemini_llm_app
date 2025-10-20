@@ -2,6 +2,7 @@
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_tavily import TavilyCrawl, TavilyExtract, TavilySearch
 
+
 from src.utils.setvars import _set_env
 
 _set_env("TAVILY_API_KEY")

@@ -29,6 +29,9 @@ langchain-graph-retriever[chroma]
 langgraph
 langchain-tavily
 duckduckgo-search
+langgraph-checkpoint
+langgraph-checkpoint-redis 
+langchain-redis
 wikipedia
 wikibase-rest-api-client
 mediawikiapi

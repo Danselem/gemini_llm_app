@@ -169,5 +169,5 @@ def get_chroma_load(collection_name: str, embeddings: Any, directory: Union[str,
         persist_directory=config.directory.as_posix(),
     )
 
-    retriever = vector_store.as_retriever()
-    return retriever
+    # retriever = vector_store.as_retriever()
+    return vector_store

@@ -1,6 +1,6 @@
 from redisvl.query import VectorRangeQuery
 from redisvl.query.filter import Tag
-from embeddings.sentence_embedding import get_hf_embed
+from src.embeddings.sentence_embedding import get_hf_embed
 from typing import Optional
 from src.memory.models import MemoryType
 from src.memory.storage import long_term_memory_index

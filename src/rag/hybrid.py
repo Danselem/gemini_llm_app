@@ -32,11 +32,13 @@ def run_hybrid_agent(question: str, output_name: str):
         # Initialize components
         google_llm = get_gemini_llm(model="gemini-2.0-flash")
         embeddings = get_sentence_embeddings()
-        retriever = get_chroma_load(
+        vector_store = get_chroma_load(
             embeddings=embeddings,
             directory=Path("storage/chroma"),
             collection_name="pdf",
         )
+
+        retriever = vector_store.as_retriever()
 
         m_retriever = multi_query_retriever(retriever=retriever, llm=google_llm)
 
